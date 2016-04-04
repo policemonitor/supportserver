@@ -1,0 +1,21 @@
+<div class="form_list">
+  <p id="notice"><%= notice %></p>
+
+  <p>
+    <strong>Latitude:</strong>
+    <%= @car.latitude %>
+  </p>
+
+  <p>
+    <strong>Longitude:</strong>
+    <%= @car.longitude %>
+  </p>
+
+  <p>
+    <strong>Title:</strong>
+    <%= @car.title %>
+  </p>
+
+  <%= link_to 'Edit', edit_car_path(@car) %> |
+  <%= link_to 'Back', cars_path %>
+</div>
