@@ -3,9 +3,11 @@
 #  json.url car_url(car, format: :json)
 #end
 json.array!(@cars) do |car|
-  json.car car.title
+  json.car car.crew_name
   json.details do
+    json.car_number car.car_number
     json.latitude car.latitude
-    json.rating car.longitude
+    json.longitude car.longitude
+    json.vin_number car.vin_number
   end
 end

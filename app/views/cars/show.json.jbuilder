@@ -1,1 +1,1 @@
-json.extract! @car,  :title, :latitude, :longitude, :created_at, :updated_at
+json.extract! @car,  :crew_name, :car_number, :vin_number

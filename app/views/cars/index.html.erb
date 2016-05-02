@@ -8,9 +8,8 @@
     <table>
       <thead>
         <tr>
-          <th>Title</th>
-          <th>Latitude</th>
-          <th>Longitude</th>
+          <th>CREW NAME</th>
+          <th>CAR NUMBER</th>
           <th></th>
           <th></th>
           <th></th>
@@ -20,9 +19,8 @@
       <tbody>
         <% @cars.each do |car| %>
           <tr>
-            <td><%= car.title %></td>
-            <td><%= car.latitude %></td>
-            <td><%= car.longitude %></td>
+            <td><%= car.crew_name %></td>
+            <td><%= car.car_number %></td>
             <td><%= link_to 'Show', car %></td>
             <td><%= link_to 'Edit', edit_car_path(car) %></td>
             <td><%= link_to 'Destroy', car, method: :delete, data: { confirm: 'Are you sure?' } %></td>

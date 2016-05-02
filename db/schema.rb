@@ -11,14 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160404200423) do
+ActiveRecord::Schema.define(version: 20160502132416) do
 
   create_table "cars", force: :cascade do |t|
     t.float    "latitude"
     t.float    "longitude"
-    t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "car_number"
+    t.string   "vin_number"
+    t.string   "crew_name"
   end
 
 end

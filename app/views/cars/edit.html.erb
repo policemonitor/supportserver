@@ -1,7 +1,42 @@
 <div class="form_list">
   <h1>Editing Car</h1>
 
-  <%= render 'form' %>
+  <%= form_for(@car) do |f| %>
+    <% if @car.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@car.errors.count, "error") %> prohibited this car from being saved:</h2>
+
+        <ul>
+        <% @car.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="field">
+      <%= f.label :car_number %><br>
+      <%= f.text_field :car_number %>
+    </div>
+    <div class="field">
+      <%= f.label :vin_number %><br>
+      <%= f.text_field :vin_number %>
+    </div>
+    <div class="field">
+      <%= f.label :crew_name %><br>
+      <%= f.text_field :crew_name %>
+    </div>
+    <div class="field">
+      <%= f.label :longitude %><br>
+      <%= f.text_field :longitude %>
+    </div>
+    <div class="field">
+      <%= f.label :latitude %><br>
+      <%= f.text_field :latitude %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  <% end %>
 
   <%= link_to 'Show', @car %> |
   <%= link_to 'Back', cars_path %>

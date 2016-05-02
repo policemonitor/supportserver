@@ -8,7 +8,7 @@ class CarsController < ApplicationController
     @hash = Gmaps4rails.build_markers(@cars) do |car, marker|
       marker.lat car.latitude
       marker.lng car.longitude
-      marker.title car.title
+      marker.title car.car_number
     end
   end
 
@@ -46,7 +46,7 @@ class CarsController < ApplicationController
   # PATCH/PUT /cars/1.json
   def update
     respond_to do |format|
-      if @car.update(car_params)
+      if @car.update(car_update_params)
         format.html { redirect_to @car, notice: 'Car was successfully updated.' }
         format.json { head :no_content }
       else
@@ -74,6 +74,10 @@ class CarsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def car_params
-      params.require(:car).permit(:latitude, :longitude, :address, :description, :title)
+      params.require(:car).permit(:car_number, :vin_number, :crew_name)
+    end
+
+    def car_update_params
+      params.require(:car).permit(:car_number, :vin_number, :crew_name, :longitude, :latitude)
     end
 end
