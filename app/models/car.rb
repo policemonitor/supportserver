@@ -17,4 +17,8 @@ class Car < ActiveRecord::Base
           presence: { message: " не може бути порожнім" },
           uniqueness:  {case_sensitive: false, message: " вже зареєстровано"},
           format: { with: VALID_CREW_NAME, message: "має неправильний формат" }
+
+  def self.extract_car name, vin, number
+    find_by("car_number = ? AND vin_number = ? AND crew_name = ?", number, vin, name)
+  end
 end

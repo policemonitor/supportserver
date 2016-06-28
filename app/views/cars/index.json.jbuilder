@@ -10,4 +10,8 @@ json.array!(@cars) do |car|
     json.longitude car.longitude
     json.vin_number car.vin_number
   end
+  json.statuses do
+    json.on_duty car.on_duty
+    json.on_a_mission car.on_a_mission
+  end
 end

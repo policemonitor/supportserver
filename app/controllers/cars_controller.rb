@@ -1,10 +1,6 @@
 class CarsController < ApplicationController
-  before_action :set_car, only: [:show, :edit, :update, :destroy]
-
-  # GET /cars
-  # GET /cars.json
   def index
-    @cars = Car.all
+    @cars = Car.where(deleted: false)
     @hash = Gmaps4rails.build_markers(@cars) do |car, marker|
       marker.lat car.latitude
       marker.lng car.longitude
@@ -12,22 +8,18 @@ class CarsController < ApplicationController
     end
   end
 
-  # GET /cars/1
-  # GET /cars/1.json
   def show
+    @car = Car.find(params[:id])
   end
 
-  # GET /cars/new
   def new
     @car = Car.new
   end
 
-  # GET /cars/1/edit
   def edit
+    @car = Car.find(params[:id])
   end
 
-  # POST /cars
-  # POST /cars.json
   def create
     @car = Car.new(car_params)
 
@@ -42,12 +34,13 @@ class CarsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /cars/1
-  # PATCH/PUT /cars/1.json
   def update
+    @car = Car.extract_car params["car_name"], params["vin_number"], params["car_number"]
+    @car = Car.find(params[:id]) if @car.nil?
+
     respond_to do |format|
       if @car.update(car_update_params)
-        format.html { redirect_to @car, notice: 'Car was successfully updated.' }
+        format.html { redirect_to @car, notice: 'Car was successfully updated. '}
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -56,28 +49,27 @@ class CarsController < ApplicationController
     end
   end
 
-  # DELETE /cars/1
-  # DELETE /cars/1.json
   def destroy
-    @car.destroy
+    @car = Car.extract_car params["car_name"], params["vin_number"], params["car_number"]
+    @car = Car.find(params[:id]) if @car.nil?
+
     respond_to do |format|
-      format.html { redirect_to cars_url }
-      format.json { head :no_content }
+      if !@car.nil? && @car.update_attribute(:deleted, true)
+        format.html { redirect_to @car, notice: 'Car was successfully deleted.'}
+        format.json { head :no_content }
+      else
+        format.html { render action: 'edit' }
+        format.json { render json: @car.errors, status: :unprocessable_entity }
+      end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_car
-      @car = Car.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
     def car_params
       params.require(:car).permit(:car_number, :vin_number, :crew_name)
     end
 
     def car_update_params
-      params.require(:car).permit(:car_number, :vin_number, :crew_name, :longitude, :latitude)
+      params.require(:car).permit(:car_number, :vin_number, :crew_name, :longitude, :latitude, :on_duty, :on_a_mission)
     end
 end
