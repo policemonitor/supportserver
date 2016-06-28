@@ -35,8 +35,7 @@ class CarsController < ApplicationController
   end
 
   def update
-    @car = Car.extract_car params["car_name"], params["vin_number"], params["car_number"]
-    @car = Car.find(params[:id]) if @car.nil?
+    @car = Car.find(params[:id])
 
     respond_to do |format|
       if @car.update(car_update_params)
@@ -50,11 +49,8 @@ class CarsController < ApplicationController
   end
 
   def destroy
-    @car = Car.extract_car params["car_name"], params["vin_number"], params["car_number"]
-    @car = Car.find(params[:id]) if @car.nil?
-
     respond_to do |format|
-      if !@car.nil? && @car.update_attribute(:deleted, true)
+      if Car.find(params[:id]).update_attribute(:deleted, true)
         format.html { redirect_to @car, notice: 'Car was successfully deleted.'}
         format.json { head :no_content }
       else
@@ -66,10 +62,10 @@ class CarsController < ApplicationController
 
   private
     def car_params
-      params.require(:car).permit(:car_number, :vin_number, :crew_name)
+      params.require(:car).permit(:car_number, :vin_number, :car_name)
     end
 
     def car_update_params
-      params.require(:car).permit(:car_number, :vin_number, :crew_name, :longitude, :latitude, :on_duty, :on_a_mission)
+      params.require(:car).permit(:car_number, :vin_number, :car_name, :longitude, :latitude, :on_duty, :on_a_mission)
     end
 end

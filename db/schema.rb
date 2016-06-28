@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160628125759) do
+ActiveRecord::Schema.define(version: 20160628153605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20160628125759) do
     t.datetime "updated_at"
     t.string   "car_number"
     t.string   "vin_number"
-    t.string   "crew_name"
+    t.string   "car_name"
     t.boolean  "on_duty",      default: true
     t.boolean  "on_a_mission", default: false
     t.boolean  "deleted",      default: false

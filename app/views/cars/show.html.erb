@@ -13,8 +13,10 @@
 
   <p>
     <strong>Crew name:</strong>
-    <%= @car.crew_name %>
+    <%= @car.car_name %>
   </p>
+
+  <%= @car.deleted ? "Видалено" : "Не видалено" %>
 
   <%= link_to 'Edit', edit_car_path(@car) %> |
   <%= link_to 'Back', cars_path %>
