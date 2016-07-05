@@ -1,4 +1,8 @@
 class CarsController < ApplicationController
+  before_action :check_api_key, only: [:index, :new, :edit, :create, :update, :destroy]
+
+  SYNCHRONIZATION_KEY = "abcde12345"
+
   def index
     @cars = Car.where(deleted: false)
     @hash = Gmaps4rails.build_markers(@cars) do |car, marker|
@@ -61,6 +65,15 @@ class CarsController < ApplicationController
   end
 
   private
+    def check_api_key
+      if (!params[:key].eql? SYNCHRONIZATION_KEY.to_s) || params[:key].nil?
+        respond_to do |format|
+          format.html { redirect_to nonauth_path }
+          format.json { render nothing: true, status: :unauthorized }
+        end
+      end
+    end
+
     def car_params
       params.require(:car).permit(:car_number, :vin_number, :car_name)
     end
