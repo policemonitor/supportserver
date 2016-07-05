@@ -1,8 +1,6 @@
 class CarsController < ApplicationController
   before_action :check_api_key, only: [:index, :new, :edit, :create, :update, :destroy]
 
-  SYNCHRONIZATION_KEY = "abcde12345"
-
   def index
     @cars = Car.where(deleted: false)
     @hash = Gmaps4rails.build_markers(@cars) do |car, marker|
@@ -43,7 +41,7 @@ class CarsController < ApplicationController
 
     respond_to do |format|
       if @car.update(car_update_params)
-        format.html { redirect_to @car, notice: 'Car was successfully updated. '}
+        format.html { redirect_to @car, notice: 'Car was successfully updated.'}
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -66,7 +64,8 @@ class CarsController < ApplicationController
 
   private
     def check_api_key
-      if (!params[:key].eql? SYNCHRONIZATION_KEY.to_s) || params[:key].nil?
+      if (!params[:key].eql? APP_CONFIG['key']) || params[:key].nil?
+        puts "======================== WRONG API KEY! ========================="
         respond_to do |format|
           format.html { redirect_to nonauth_path }
           format.json { render nothing: true, status: :unauthorized }
@@ -79,6 +78,9 @@ class CarsController < ApplicationController
     end
 
     def car_update_params
-      params.require(:car).permit(:car_number, :vin_number, :car_name, :longitude, :latitude, :on_duty, :on_a_mission)
+      params.require(:car).permit(:car_number,
+                                  :vin_number, :car_name,
+                                  :longitude, :latitude,
+                                  :on_duty, :on_a_mission)
     end
 end
