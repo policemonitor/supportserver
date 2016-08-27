@@ -14,5 +14,11 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require underscore
+//= require jquery.turbolinks
+//= require bootstrap-sprockets
 //= require gmaps/google
 //= require_tree .
+
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})

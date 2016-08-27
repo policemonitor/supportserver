@@ -10,6 +10,9 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'geocoder'
 gem 'gmaps4rails'
+gem 'bootstrap-sass', '~> 3.3.6'
+gem 'jquery-ui-rails'
+gem 'jquery-turbolinks'
 
 group :doc do
   gem 'sdoc', require: false
