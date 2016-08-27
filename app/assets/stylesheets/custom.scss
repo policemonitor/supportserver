@@ -1,0 +1,67 @@
+.card-element {
+  height: 60px;
+  width: 100%;
+  margin-top: 10px;
+  padding: 5px;
+  box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.2);
+  background-color: white;
+}
+
+.card-row {
+  width: 100%;
+  box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.2);
+  background-color: white;
+  padding: 5px 15px 5px 15px;
+}
+
+#card-header {
+  border-radius: 0%;
+  background-color: white;
+  box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.2);
+  margin-bottom: 10px;
+}
+
+.panel {
+  box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.2);
+  background-color: white;
+  border-radius: 0px;
+  padding: 5px 15px 5px 15px;
+}
+
+.gerald {
+  margin-top: -13px;
+  height: 46px;
+}
+
+.spacing-fix {
+  padding: 0px;
+}
+
+.panel-heading {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.panel-body {
+  padding: 5px 10px 0px 10px;
+}
+
+ul > .panel-body {
+  margin-left: 0px;
+}
+
+.properties-list {
+  list-style-type: none;
+  padding-left: 0px;
+}
+
+.broken-car {
+  color: red;
+}
+
+.search-panel {
+  height: 51px;
+  box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.2);
+  background-color: white;
+  border-radius: 0px;
+}
