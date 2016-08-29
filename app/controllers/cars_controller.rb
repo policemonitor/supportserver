@@ -8,6 +8,7 @@ class CarsController < ApplicationController
       marker.lng car.longitude
       marker.title car.car_number
     end
+
   end
 
   def show

@@ -1,4 +1,5 @@
 <nav class="navbar navbar-default topnav" id="card-header" role="navigation">
+  <div class="container-fluid">
     <div class="navbar-header hiden-xs">
       <%= link_to root_path, class: "navbar-brand" do  %>
         <%= image_tag "system/gerald.gif", class: "gerald", alt: "Сервер екіпажів"%>
@@ -7,4 +8,12 @@
     <ul class="nav navbar-nav">
       <li><%= link_to "Сервер екіпажів", root_path, class: "brand-name" %></li>
     </ul>
+    <ul class="nav navbar-nav navbar-right hidden-xs">
+      <li class="pull-right">
+        <%= link_to "#", class: "navbar-link", id: "search-icon" do %>
+          <span class="glyphicon glyphicon-search" ></span>
+        <% end %>
+      </li>
+    </ul>
+  </div>
 </nav>
