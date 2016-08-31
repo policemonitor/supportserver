@@ -62,6 +62,8 @@ ul > .panel-body {
 
 .search-panel {
   height: 50px;
+  width: 60%;
+  padding: 11px 15px 0px 15px;
   box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.2);
   background-color: white;
   border-radius: 0px;
@@ -69,12 +71,11 @@ ul > .panel-body {
   margin-top: 1px;
   margin-bottom: 1px;
   display: none;
-  vertical-align: middle;
+  position: absolute;
 }
 
 .search-form {
-  width: 75%;
-  margin: 11px 15px 0px 15px;
+  width: 100%;
   border: 0px;
   outline: 0px;
   background: transparent;
@@ -91,4 +92,17 @@ ul > .panel-body {
 
 a:focus {
     outline: 0;
+}
+
+#map-container {
+  width: 100%;
+  position: fixed;
+  height: 100vh;
+}
+
+#map-canvas {
+  min-width: 100%;
+  z-index: 3;
+  height: 100%;
+  position: absolute;
 }

@@ -1,0 +1,40 @@
+<div id="map-container">
+  <div id="map-canvas"></div>
+</div>
+<script>
+  handler = Gmaps.build('Google');
+  handler.buildMap({
+    provider: {
+      zoom: 10
+    },
+    internal: {
+      id: 'map-canvas'
+    }
+  }, function () {
+    markers = handler.addMarkers(<%=raw @hash.to_json.html_safe %>);
+    handler.map.centerOn(markers[0]);
+  });
+
+
+  $(function() {
+    $("#search_query").autocomplete({
+       source: function (request, response) {
+              var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
+              var array = $.grep(<%= raw @cars.to_json %>, function (value) {
+                  return matcher.test(value.car_name) || matcher.test(value.car_number);
+              });
+              response(array);
+            },
+        select: function (event, ui) {
+            $("#search_query").val(ui.item.car_name);
+            $("#search_query").val(ui.item.car_number);
+
+            return false;
+        }
+    }).data("uiAutocomplete")._renderItem = function(ul, item) {
+        return $("<li></li>").data("item.autocomplete", item).append("<a>Екіпаж " + item.car_name + "</a>").appendTo(ul);
+    };
+  });
+
+
+</script>

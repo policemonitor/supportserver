@@ -1,12 +1,4 @@
- <script src="https://maps.googleapis.com/maps/api/js?sensor=false&key=<%= APP_CONFIG['google-map-key'] %>"></script>
-<script type="text/javascript">
-    handler = Gmaps.build('Google');
-    handler.buildMap({ provider: {}, internal: {id: 'map-canvas'}}, function(){
-        markers = handler.addMarkers(<%=raw @hash.to_json %>);
-        handler.bounds.extendWith(markers);
-        handler.fitMapToBounds();
-    });
-</script>
+<%= javascript_include_tag "//maps.google.com/maps/api/js?libraries=geometry&key=#{APP_CONFIG['google-map-key']}" %>
 
 <div class="container-fluid">
   <div class="row spacing-fix">
@@ -15,44 +7,13 @@
       <div class="card-row">
       <h3 id="list-header">Список екіпажів</h3>
         <div class="panel-group">
-          <% @cars.each do |car| %>
-            <div class="panel">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <%= link_to "Екіпаж: " + car.car_name, "#" + car.car_name, data: { toggle: "collapse" } %>
-                  <div class="pull-right">
-                    <% if !car.on_duty?%>
-                      <span class="glyphicon glyphicon-ban-circle broken-car"
-                            aria-hidden="true" data-container="body"
-                            data-toggle="popover" data-placement="right"
-                            data-content="На ремонті" ></span>
-                    <% end %>
-                    <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
-                  </div>
-                </h4>
-              </div>
-              <div id="<%= car.car_name %>" class="panel-collapse collapse">
-                <div class="panel-body">
-                  <ul class="properties-list">
-                    <li>Оновлено: <%= car.updated_at.strftime("%H:%m %B, %d") %></li>
-                    <li>Номер: <%= car.car_number %>, <%= link_to "налаштування", edit_car_path(car) %></li>
-                    <li>
-                      Статус: <%= car.on_a_mission? ? "на виїзді" : "вільний" %><%= sanitize(", <b>у ремонті</b>") if !car.on_duty? %>
-                    </li>
-                  <ul>
-                </div>
-              </div>
-            </div>
-          <% end %>
+          <%= render partial: "partials/car", collection: @cars  %>
         </div>
       </div>
     </div>
-
     <div class="col-md-8 spacing-fix">
-      <div class="search-panel">
-          <input type="text" class="search-form" id="search_query" placeholder="Пошук екіпажів на мапі">
-      </div>
-      <div id="map-canvas"></div>
+      <%= render "shared/map" %>
+      <%= render "partials/search" %>
     </div>
   </div>
 </div>
