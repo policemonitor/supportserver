@@ -6,7 +6,8 @@ class CarsController < ApplicationController
     @hash = Gmaps4rails.build_markers(@cars) do |car, marker|
       marker.lat car.latitude
       marker.lng car.longitude
-      marker.title "Екіпаж: " + car.car_name
+      marker.title "Екіпаж: #{car.car_name}"
+      marker.infowindow "Екіпаж: #{car.car_name}"
     end
 
   end

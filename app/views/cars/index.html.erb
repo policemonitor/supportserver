@@ -1,8 +1,8 @@
 <%= javascript_include_tag "//maps.google.com/maps/api/js?libraries=geometry&key=#{APP_CONFIG['google-map-key']}" %>
 
 <div class="container-fluid">
-  <div class="row spacing-fix">
-    <div class="col-md-3 spacing-fix">
+  <div class="row spacing-fix" >
+    <div class="col-md-3 spacing-fix list-over-map">
       <%= render "shared/header" %>
       <div class="card-row">
       <h3 id="list-header">Список екіпажів</h3>
@@ -11,9 +11,9 @@
         </div>
       </div>
     </div>
-    <div class="col-md-8 spacing-fix">
-      <%= render "shared/map" %>
+    <div class="col-md-9 spacing-fix list-over-map">
       <%= render "partials/search" %>
     </div>
+    <%= render "shared/map" %>
   </div>
 </div>

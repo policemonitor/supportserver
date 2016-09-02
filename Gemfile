@@ -17,3 +17,7 @@ gem 'jquery-turbolinks'
 group :doc do
   gem 'sdoc', require: false
 end
+
+group :development do
+  gem 'better_errors', '~> 2.1', '>= 2.1.1'
+end

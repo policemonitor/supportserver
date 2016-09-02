@@ -15,26 +15,24 @@
     handler.map.centerOn(markers[0]);
   });
 
+  $("#search_query").autocomplete({
+     source: function (request, response) {
+            var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
+            var array = $.grep(<%= raw @cars.to_json %>, function (value) {
+                return matcher.test(value.car_name) || matcher.test(value.car_number);
+            });
+            response(array);
+          },
+      select: function (event, ui) {
+          $("#search_query").val("Екіпаж: " + ui.item.car_name);
+          move_map_to(ui.item.latitude, ui.item.longitude);
+          return false;
+      }
+  }).data("uiAutocomplete")._renderItem = function(ul, item) {
+      return $("<li></li>").data("item.autocomplete", item).append("<a>Екіпаж " + item.car_name + ", держ. знак " + item.car_number + "</a>").appendTo(ul);
+  };
 
-  $(function() {
-    $("#search_query").autocomplete({
-       source: function (request, response) {
-              var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
-              var array = $.grep(<%= raw @cars.to_json %>, function (value) {
-                  return matcher.test(value.car_name) || matcher.test(value.car_number);
-              });
-              response(array);
-            },
-        select: function (event, ui) {
-            $("#search_query").val(ui.item.car_name);
-            $("#search_query").val(ui.item.car_number);
-
-            return false;
-        }
-    }).data("uiAutocomplete")._renderItem = function(ul, item) {
-        return $("<li></li>").data("item.autocomplete", item).append("<a>Екіпаж " + item.car_name + "</a>").appendTo(ul);
-    };
-  });
-
-
+  function move_map_to (latitude, longitude) {
+    handler.map.centerOn({lat: latitude, lng: longitude});
+  }
 </script>
