@@ -2,18 +2,15 @@
   <div id="map-canvas"></div>
 </div>
 <script>
-  handler = Gmaps.build('Google');
-  handler.buildMap({
-    provider: {
-      zoom: 10
-    },
-    internal: {
-      id: 'map-canvas'
-    }
-  }, function () {
-    markers = handler.addMarkers(<%=raw @hash.to_json.html_safe %>);
-    handler.map.centerOn(markers[0]);
+  var map = new GMaps({
+    el: '#map-canvas',
+    lat: 50.27,
+    lng: 30.3125,
+    zoom: 10,
+    disableDefaultUI: true
   });
+
+  markers = map.addMarkers(<%=raw @hash.to_json.html_safe %>);
 
   $("#search_query").autocomplete({
      source: function (request, response) {
@@ -33,6 +30,6 @@
   };
 
   function move_map_to (latitude, longitude) {
-    handler.map.centerOn({lat: latitude, lng: longitude});
+    map.map.panTo({lat: latitude, lng: longitude});
   }
 </script>
