@@ -1,15 +1,24 @@
 class CarsController < ApplicationController
-  # before_action :check_api_key, only: [:index, :new, :edit, :create, :update, :destroy]
-
+  # before_action :check_api_key, only: [:index, :update_map, :new, :edit, :create, :update, :destroy]
+  before_action :get_markers, only: [:index, :update_map]
   def index
+  end
+
+  def update_map
+    respond_to do |format|
+      format.js {}
+      format.json { render json: @hash }
+    end
+  end
+
+  def get_markers
     @cars = Car.where(deleted: false)
     @hash = Gmaps4rails.build_markers(@cars) do |car, marker|
       marker.lat car.latitude
       marker.lng car.longitude
       marker.title "Екіпаж: #{car.car_name}"
-      marker.infowindow "Екіпаж: #{car.car_name}"
+      marker.infowindow "Екіпаж #{car.car_name}, держ. знак #{car.car_number}"
     end
-
   end
 
   def show

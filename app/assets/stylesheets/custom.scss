@@ -80,6 +80,7 @@ ul > .panel-body {
 .ui-state-focus {
   background: #d3d3d3 !important;
   border: 1px solid #d3d3d3 !important;
+  text-decoration: none !important;
 }
 
 .ui-widget-content {
@@ -90,6 +91,7 @@ ul > .panel-body {
 
 .ui-menu-item {
   border: 0px;
+  text-decoration: none;
 }
 
 #list-header {

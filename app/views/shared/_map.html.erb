@@ -10,24 +10,79 @@
     disableDefaultUI: true
   });
 
-  markers = map.addMarkers(<%=raw @hash.to_json.html_safe %>);
+  var get_crews_list = function () {
+    crews = [];
+    $.ajax({
+      type: 'GET',
+      url: '/update_map',
+      async: true,
+      beforeSend: function (xhr) {
+        if (xhr && xhr.overrideMimeType) {
+          xhr.overrideMimeType('application/json;charset=utf-8');
+        }
+      },
+      dataType: 'json',
+      success: function (data) {
+        crews =  data;
+      }
+    });
+    console.log(crews);
+    return crews;
+  };
 
   $("#search_query").autocomplete({
-     source: function (request, response) {
-            var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
-            var array = $.grep(<%= raw @cars.to_json %>, function (value) {
-                return matcher.test(value.car_name) || matcher.test(value.car_number);
-            });
-            response(array);
-          },
-      select: function (event, ui) {
-          $("#search_query").val("Екіпаж: " + ui.item.car_name);
-          move_map_to(ui.item.latitude, ui.item.longitude);
-          return false;
-      }
+    source: function (request, response) {
+       var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
+       var array = $.grep(<%= raw @cars.to_json %>, function (value) {
+           return matcher.test(value.car_name) || matcher.test(value.car_number);
+       });
+       response(array);
+     },
+    select: function (event, ui) {
+      $("#search_query").val("Екіпаж " + ui.item.car_name + ", держ. знак " + ui.item.car_number);
+      $.ajax({
+        type: 'GET',
+        url: '/cars/' + ui.item.id,
+        async: true,
+        beforeSend: function (xhr) {
+          if (xhr && xhr.overrideMimeType) {
+            xhr.overrideMimeType('application/json;charset=utf-8');
+          }
+        },
+        dataType: 'json',
+        success: function (data) {
+          move_map_to(data.latitude, data.longitude);
+          console.log("UPDATED");
+        }
+      });
+      return false;
+    }
   }).data("uiAutocomplete")._renderItem = function(ul, item) {
-      return $("<li></li>").data("item.autocomplete", item).append("<a>Екіпаж " + item.car_name + ", держ. знак " + item.car_number + "</a>").appendTo(ul);
+      return $("<li></li>").data("item.autocomplete", item).append("<a>Екіпаж " + item.car_name +  ", держ. знак " + item.car_number + "</a>").appendTo(ul);
   };
+
+  var delay = 5000,
+  callout = function () {
+    $.ajax({
+      type: 'GET',
+      url: '/update_map',
+      async: true,
+      beforeSend: function (xhr) {
+        if (xhr && xhr.overrideMimeType) {
+          xhr.overrideMimeType('application/json;charset=utf-8');
+        }
+      },
+      dataType: 'json',
+      success: function (data) {
+        map.removeMarkers();
+        map.addMarkers(data);
+        console.log("UPDATED");
+      }
+    }).always(function () {
+        setTimeout(callout, delay);
+    });
+  };
+  callout();
 
   function move_map_to (latitude, longitude) {
     map.map.panTo({lat: latitude, lng: longitude});
