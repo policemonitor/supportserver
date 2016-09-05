@@ -18,4 +18,5 @@
 //= require jquery.turbolinks
 //= require bootstrap-sprockets
 //= require gmaps/google
+//= maptools
 //= require_tree .

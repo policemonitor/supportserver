@@ -1,4 +1,23 @@
-.card-element {
+/**
+**            Cards and pannels
+**/
+
+.card-row {                                                                     // Row of crews
+  width: 100%;
+  height: 100%;
+  box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.2);
+  background-color: white;
+  padding: 5px 15px 5px 15px;
+}
+
+#card-header {                                                                  // Header in row of crews
+  border-radius: 0%;
+  background-color: white;
+  box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.2);
+  margin-bottom: 10px;
+}
+
+.card-element {                                                                 // Crew element
   height: 60px;
   width: 100%;
   margin-top: 10px;
@@ -7,22 +26,11 @@
   background-color: white;
 }
 
-.card-row {
-  width: 100%;
-  height: 100%;
-  box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.2);
-  background-color: white;
-  padding: 5px 15px 5px 15px;
+.list-over-map {
+  z-index: 1;
 }
 
-#card-header {
-  border-radius: 0%;
-  background-color: white;
-  box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.2);
-  margin-bottom: 10px;
-}
-
-.panel {
+.panel {                                                                        // Pannel of crew with sliding-down
   box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.2);
   background-color: white;
   border-radius: 0px;
@@ -42,14 +50,19 @@ ul > .panel-body {
   margin-left: 0px;
 }
 
-.properties-list {
+.properties-list {                                                              // Data in pannels
   list-style-type: none;
   padding-left: 0px;
 }
 
-.broken-car {
+.broken-car {                                                                   // Label for broken cars
   color: red;
 }
+
+
+/**
+**          Search pannel
+**/
 
 .search-panel {
   height: 50px;
@@ -94,17 +107,9 @@ ul > .panel-body {
   text-decoration: none;
 }
 
-#list-header {
-  margin-bottom: 25px;
-}
-
-.list-over-map {
-  z-index: 1;
-}
-
-a:focus {
-    outline: 0;
-}
+/**
+**          Map settings
+**/
 
 #map-container {
   width: 100%;
@@ -118,6 +123,20 @@ a:focus {
   height: 100%;
   position: absolute;
 }
+
+/**
+**            Other
+**/
+
+#list-header {
+  margin-bottom: 25px;
+}
+
+a:focus {
+    outline: 0;
+}
+
+
 
 .gerald {
   margin-top: -13px;

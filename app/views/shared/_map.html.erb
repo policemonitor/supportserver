@@ -2,6 +2,11 @@
   <div id="map-canvas"></div>
 </div>
 <script>
+
+/**
+**            Map initializing
+**/
+
   var map = new GMaps({
     el: '#map-canvas',
     lat: 50.27,
@@ -10,37 +15,20 @@
     disableDefaultUI: true
   });
 
-  var get_crews_list = function () {
-    crews = [];
-    $.ajax({
-      type: 'GET',
-      url: '/update_map',
-      async: true,
-      beforeSend: function (xhr) {
-        if (xhr && xhr.overrideMimeType) {
-          xhr.overrideMimeType('application/json;charset=utf-8');
-        }
-      },
-      dataType: 'json',
-      success: function (data) {
-        crews =  data;
-      }
-    });
-    console.log(crews);
-    return crews;
-  };
+/**
+**              Autocomplete function for live search
+**/
 
   $("#search_query").autocomplete({
     source: function (request, response) {
        var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
-       var array = $.grep(<%= raw @cars.to_json %>, function (value) {
+       var array = $.grep(<%= raw @cars.to_json %>, function (value) {          // Get all crew from list, that already listed in the first request
            return matcher.test(value.car_name) || matcher.test(value.car_number);
        });
        response(array);
-     },
+    },
     select: function (event, ui) {
-      $("#search_query").val("Екіпаж " + ui.item.car_name + ", держ. знак " + ui.item.car_number);
-      $.ajax({
+      $.ajax({                                                                  // Get fresh information about crew's position
         type: 'GET',
         url: '/cars/' + ui.item.id,
         async: true,
@@ -51,40 +39,12 @@
         },
         dataType: 'json',
         success: function (data) {
+          $("#search_query").val("Екіпаж " + ui.item.car_name + ", держ. знак " + ui.item.car_number);
           move_map_to(data.latitude, data.longitude);
-          console.log("UPDATED");
         }
       });
-      return false;
     }
   }).data("uiAutocomplete")._renderItem = function(ul, item) {
       return $("<li></li>").data("item.autocomplete", item).append("<a>Екіпаж " + item.car_name +  ", держ. знак " + item.car_number + "</a>").appendTo(ul);
   };
-
-  var delay = 5000,
-  callout = function () {
-    $.ajax({
-      type: 'GET',
-      url: '/update_map',
-      async: true,
-      beforeSend: function (xhr) {
-        if (xhr && xhr.overrideMimeType) {
-          xhr.overrideMimeType('application/json;charset=utf-8');
-        }
-      },
-      dataType: 'json',
-      success: function (data) {
-        map.removeMarkers();
-        map.addMarkers(data);
-        console.log("UPDATED");
-      }
-    }).always(function () {
-        setTimeout(callout, delay);
-    });
-  };
-  callout();
-
-  function move_map_to (latitude, longitude) {
-    map.map.panTo({lat: latitude, lng: longitude});
-  }
 </script>
