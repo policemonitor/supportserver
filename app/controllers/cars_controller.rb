@@ -1,5 +1,5 @@
 class CarsController < ApplicationController
-  before_action :check_api_key, only: [:index, :update_map, :new, :edit, :create, :update, :destroy]
+  #before_action :check_api_key, only: [:index, :update_map, :new, :edit, :create, :update, :destroy]
   before_action :get_markers, only: [:index, :update_map]
   def index
   end

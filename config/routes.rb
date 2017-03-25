@@ -1,4 +1,6 @@
 Gmaps::Application.routes.draw do
+  get 'investigators/index'
+
   resources :cars
 
   root 'cars#index'
